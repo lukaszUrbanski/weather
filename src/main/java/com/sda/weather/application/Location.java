@@ -10,4 +10,14 @@ public class Location {
 
     public Location(final String name, final String coordinate, final String region, final String country) {
     }
+
+    @Override
+    public String toString() {
+        return "Location{" +
+                "name='" + name + '\'' +
+                ", coordinate='" + coordinate + '\'' +
+                ", region='" + region + '\'' +
+                ", country='" + country + '\'' +
+                '}';
+    }
 }
