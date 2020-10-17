@@ -1,10 +1,21 @@
 package com.sda.weather.application;
 
+import java.util.List;
+
 public class LocationController {
     private final LocationService locationService = new LocationService();
 
-    public void addLocation(final String name, final String coordinate, final String region, final String country) {
+    public String addLocation(final String name, final String coordinate, final String region, final String country) {
 
-        locationService.addNewLocation(name, coordinate, region, country);
+       Location location =  locationService.addNewLocation(name, coordinate, region, country);
+
+       return location.toString();
+    }
+
+    public String showAllLocations() {
+        List<Location> locations = locationService.readAllLocations();
+
+        return locations.toString();
+
     }
 }

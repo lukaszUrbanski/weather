@@ -1,14 +1,26 @@
 package com.sda.weather.application;
 
-public class Location {
+import lombok.Data;
 
-    private String name;
+import javax.persistence.*;
+
+@Data
+@Entity
+@Table(name = "location")
+public class Location {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String city;
     private String coordinate;
     private String region;
     private String country;
 
-    public Location(final String name, final String coordinate, final String region, final String country) {
-        this.name = name;
+    public Location() {
+    }
+
+    public Location(final String city, final String coordinate, final String region, final String country) {
+        this.city = city;
         this.coordinate = coordinate;
         this.region = region;
         this.country = country;
@@ -17,7 +29,7 @@ public class Location {
     @Override
     public String toString() {
         return "{" +
-                "'name':'" + name + '\'' +
+                "'name':'" + city + '\'' +
                 ", 'coordinate':'" + coordinate + '\'' +
                 ", 'region':'" + region + '\'' +
                 ", 'country':'" + country + '\'' +

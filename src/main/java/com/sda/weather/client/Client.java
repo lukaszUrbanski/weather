@@ -14,6 +14,7 @@ public class Client {
             System.out.println("Application is running. ");
 
             System.out.println("1. Add location.");
+            System.out.println("2. Show available locations");
             System.out.println("0. Close application.");
             int response = scanner.nextInt();
 
@@ -21,11 +22,19 @@ public class Client {
                 case 1:
                     addNewLocation();
                     break;
+                case 2:
+                    showLocation();
+                    break;
                 case 0: 
                     return;
             }
             
         }
+    }
+
+    private void showLocation() {
+        String response = locationController.showAllLocations();
+        System.out.println(response);
     }
 
     private void addNewLocation() {
@@ -36,10 +45,11 @@ public class Client {
         String coordinate  = scanner.nextLine();
         System.out.print("Enter region: ");
         String region = scanner.nextLine();
-        System.out.println("Country: ");
+        System.out.print("Country: ");
         String country = scanner.nextLine();
 
-        locationController.addLocation(name, coordinate, region, country);
+        String response = locationController.addLocation(name, coordinate, region, country);
+        System.out.println("New location has added: " + response);
 
     }
 }
