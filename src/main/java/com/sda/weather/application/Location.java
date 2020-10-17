@@ -16,11 +16,11 @@ public class Location {
 
     @Override
     public String toString() {
-        return "Location{" +
-                "name='" + name + '\'' +
-                ", coordinate='" + coordinate + '\'' +
-                ", region='" + region + '\'' +
-                ", country='" + country + '\'' +
+        return "{" +
+                "'name':'" + name + '\'' +
+                ", 'coordinate':'" + coordinate + '\'' +
+                ", 'region':'" + region + '\'' +
+                ", 'country':'" + country + '\'' +
                 '}';
     }
 }
