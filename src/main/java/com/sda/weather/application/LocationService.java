@@ -27,11 +27,9 @@ public class LocationService {
             throw new WrongDataException("Longitude is wrong.");
         }
 
-
         Location location = new Location(cityName, latitude, longitude, region, country);
-        Location savedLocation = locationRepository.saveNewLocation(location);
 
-        return savedLocation;
+        return locationRepository.saveNewLocation(location);
     }
 
     public List<Location> readAllLocations() {

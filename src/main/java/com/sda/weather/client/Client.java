@@ -46,6 +46,8 @@ public class Client {
     }
 
     private void findLocation(final String cityName) {
+        // todo: create WeatherController.java
+
         locationController.findLocation(cityName);
     }
 

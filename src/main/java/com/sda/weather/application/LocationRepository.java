@@ -13,7 +13,6 @@ public class LocationRepository {
 
     private final SessionFactory sessionFactory;
 
-
     public LocationRepository() {
         StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
                 .configure().build();

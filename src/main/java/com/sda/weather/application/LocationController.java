@@ -11,7 +11,7 @@ public class LocationController {
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     public String addLocation(final String cityName, final Double latitude, final Double longitude, final String region, final String country) {
-       Location location =  locationService.addNewLocation(cityName, latitude, longitude, region, country);
+        Location location = locationService.addNewLocation(cityName, latitude, longitude, region, country);
 
         try {
             return objectMapper.writeValueAsString(location);
@@ -31,6 +31,6 @@ public class LocationController {
     }
 
     public void findLocation(final String cityName) {
-    locationService.findLocation(city)
+//        locationService.findLocation(city);
     }
 }
