@@ -10,8 +10,8 @@ public class WeatherService {
 
     public Weather showWeatherInformation(final String cityName) {
         if (isLocationExist(cityName)) {
-            Weather weather = weatherForecastClient.getWeather(cityName);
-            return weatherRepository.saveWeather(weather);
+            WeatherResponse weather = weatherForecastClient.getWeather(cityName);
+            return weatherRepository.saveWeather(new Weather());
         } else {
             System.out.println("Location incorrect");
             throw new RuntimeException("...");              // todo
