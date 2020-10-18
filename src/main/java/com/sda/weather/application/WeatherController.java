@@ -5,6 +5,6 @@ public class WeatherController {
     private final WeatherService weatherService = new WeatherService();
 
     public void showWeatherInformation(final String cityName) {
-            weatherService.showWeatherInformation(cityName);
+        Weather weather = weatherService.showWeatherInformation(cityName);
     }
 }

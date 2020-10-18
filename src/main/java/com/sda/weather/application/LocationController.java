@@ -23,11 +23,10 @@ public class LocationController {
     public String showAllLocations() {
         List<Location> locations = locationService.readAllLocations();
 
-        return locations.toString();
-//        try {
-//            return objectMapper.writeValueAsString(locations);
-//        } catch (JsonProcessingException e) {
-//            throw new InternalServerException("Data can not be serialised.");
-//        }
+        try {
+            return objectMapper.writeValueAsString(locations);
+        } catch (JsonProcessingException e) {
+            throw new InternalServerException("Data can not be serialised.");
+        }
     }
 }
