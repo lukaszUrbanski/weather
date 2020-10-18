@@ -17,7 +17,7 @@ public class LocationRepository {
         StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
                 .configure().build();
 
-        sessionFactory  = new MetadataSources(registry)
+        sessionFactory = new MetadataSources(registry)
                 .buildMetadata()
                 .buildSessionFactory();
     }
@@ -51,12 +51,17 @@ public class LocationRepository {
     public boolean findLocation(final String cityName) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
-         session.createQuery("FROM Location AS l WHERE l.name = :name", Location.class)
-                .setParameter("name", cityName).
-                        getSingleResult();
+//        session.createQuery("FROM Location AS l WHERE l.name = :name", Location.class)
+//                .setParameter("name", cityName)
+//                .getSingleResult();
+
+        boolean isExist = (Long) session.createQuery("SELECT count(*) FROM Location AS l WHERE l.city = :name")
+                .setParameter("name", cityName)
+                .uniqueResult() > 0;
 
         transaction.commit();
         session.close();
-        return true;
+
+        return isExist;
     }
 }

@@ -3,6 +3,8 @@ package com.sda.weather.application;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.UUID;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class LocationServiceTest {
@@ -23,7 +25,7 @@ class LocationServiceTest {
     @Test
     void saveNewLocation_whenCityValueIsEmpty_shouldThrowException() {
         // when
-        assertThrows(Exception.class, () -> locationService.addNewLocation("", 1.0,1.0, "region", "country"));
+        assertThrows(Exception.class, () -> locationService.addNewLocation(" ", 1.0,1.0, "region", "country"));
     }
 
     @Test
@@ -36,5 +38,14 @@ class LocationServiceTest {
     void saveNewLocation_whenCoordinatesAreWrong_shouldThrowException() {
         // when
         assertThrows(Exception.class, () -> locationService.addNewLocation("city", 200.0, 200.0, "region", ""));
+    }
+
+    @Test
+    void isLocationExist_whenLocationDoesntExist_shouldReturnFalse(){
+        // when
+        boolean result = locationService.isLocationExist(UUID.randomUUID().toString());
+
+        // then
+        assertFalse(result);
     }
 }

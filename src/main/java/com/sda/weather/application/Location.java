@@ -1,6 +1,7 @@
 package com.sda.weather.application;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -8,8 +9,10 @@ import java.util.Set;
 
 @Data
 @Entity
+@NoArgsConstructor
 @Table(name = "location")
 public class Location {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -18,12 +21,8 @@ public class Location {
     private Double longitude;
     private String region;
     private String country;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "weather")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "location")
     Set<Weather> weatherSet = new HashSet<>();
-
-    public Location(){
-
-    }
 
     public Location(final String city, final Double latitude, final Double longitude,  final String region, final String country) {
         this.city = city;

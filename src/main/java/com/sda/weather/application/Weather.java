@@ -1,12 +1,10 @@
 package com.sda.weather.application;
 
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
+import lombok.Data;
 
 import javax.persistence.*;
 
-@RequiredArgsConstructor
-@NoArgsConstructor
+@Data
 @Entity
 @Table(name = "weather")
 public class Weather {
@@ -21,9 +19,4 @@ public class Weather {
     Double windSpeed;
     @ManyToOne
     Location location;
-
-
-    public void setLocation(final Location location) {
-        this.location = location;
-    }
 }

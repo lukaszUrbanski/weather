@@ -16,7 +16,7 @@ public class LocationController {
         try {
             return objectMapper.writeValueAsString(location);
         } catch (JsonProcessingException e) {
-            throw new RuntimeException("...");
+            throw new RuntimeException("...");  // todo: create your own exception -> InternalServerException -> 500
         }
     }
 
