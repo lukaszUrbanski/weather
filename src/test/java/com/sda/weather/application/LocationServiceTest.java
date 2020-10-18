@@ -1,6 +1,8 @@
 package com.sda.weather.application;
 
 
+import com.sda.weather.application.location.Location;
+import com.sda.weather.application.location.LocationService;
 import org.junit.jupiter.api.Test;
 
 import java.util.UUID;

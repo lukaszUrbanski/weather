@@ -1,7 +1,8 @@
-package com.sda.weather.application;
+package com.sda.weather.application.location;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sda.weather.application.InternalServerException;
 
 import java.util.List;
 

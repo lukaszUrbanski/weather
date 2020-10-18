@@ -1,4 +1,4 @@
-package com.sda.weather.application;
+package com.sda.weather.application.weather;
 
 public class WeatherController {
 

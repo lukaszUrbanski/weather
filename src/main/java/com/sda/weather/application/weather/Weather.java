@@ -1,5 +1,6 @@
-package com.sda.weather.application;
+package com.sda.weather.application.weather;
 
+import com.sda.weather.application.location.Location;
 import lombok.Data;
 
 import javax.persistence.*;

@@ -1,9 +1,9 @@
-package com.sda.weather.application;
+package com.sda.weather.application.location;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.sda.weather.application.weather.Weather;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.HashSet;

@@ -1,4 +1,6 @@
-package com.sda.weather.application;
+package com.sda.weather.application.location;
+
+import com.sda.weather.application.WrongDataException;
 
 import java.util.List;
 

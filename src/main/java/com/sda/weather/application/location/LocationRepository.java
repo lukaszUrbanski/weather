@@ -1,11 +1,9 @@
-package com.sda.weather.application;
+package com.sda.weather.application.location;
 
+import com.sda.weather.application.HibernateUtils;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.hibernate.boot.MetadataSources;
-import org.hibernate.boot.registry.StandardServiceRegistry;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 
 import java.util.List;
 
