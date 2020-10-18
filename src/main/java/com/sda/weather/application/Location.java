@@ -12,25 +12,20 @@ public class Location {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String city;
-    private String coordinate;
+    private Double latitude;
+    private Double longitude;
     private String region;
     private String country;
 
+    public Location(){
 
-    public Location(final String city, final String coordinate, final String region, final String country) {
-        this.city = city;
-        this.coordinate = coordinate;
-        this.region = region;
-        this.country = country;
     }
 
-    @Override
-    public String toString() {
-        return "{" +
-                "'name':'" + city + '\'' +
-                ", 'coordinate':'" + coordinate + '\'' +
-                ", 'region':'" + region + '\'' +
-                ", 'country':'" + country + '\'' +
-                '}';
+    public Location(final String city, final Double latitude, final Double longitude,  final String region, final String country) {
+        this.city = city;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.region = region;
+        this.country = country;
     }
 }

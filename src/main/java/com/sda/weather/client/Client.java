@@ -15,6 +15,7 @@ public class Client {
 
             System.out.println("1. Add location.");
             System.out.println("2. Show available locations");
+            System.out.println("3. Show weather information");
             System.out.println("0. Close application.");
             int response = scanner.nextInt();
 
@@ -25,11 +26,27 @@ public class Client {
                 case 2:
                     showLocation();
                     break;
-                case 0: 
+                case 3:
+                    showWeatherInformation();
+                    break;
+                case 0:
                     return;
             }
             
         }
+    }
+
+    private void showWeatherInformation() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter city to check weather ");
+        String cityName = scanner.nextLine();
+
+        findLocation(cityName);
+
+    }
+
+    private void findLocation(final String cityName) {
+        locationController.findLocation(cityName);
     }
 
     private void showLocation() {
@@ -41,14 +58,18 @@ public class Client {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Enter city name: ");
         String name = scanner.nextLine();
-        System.out.print("Enter coordinate: ");
-        String coordinate  = scanner.nextLine();
+        System.out.print("Enter latitude: ");
+        double latitude = scanner.nextDouble();
+        scanner.nextLine();
+        System.out.print("Enter longitude: ");
+        double longitude = scanner.nextDouble();
+        scanner.nextLine();
         System.out.print("Enter region: ");
         String region = scanner.nextLine();
         System.out.print("Country: ");
         String country = scanner.nextLine();
 
-        String response = locationController.addLocation(name, coordinate, region, country);
+        String response = locationController.addLocation(name, latitude, longitude, region, country);
         System.out.println("New location has added: " + response);
 
     }

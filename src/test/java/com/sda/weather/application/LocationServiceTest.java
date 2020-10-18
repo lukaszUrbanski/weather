@@ -12,7 +12,7 @@ class LocationServiceTest {
     @Test
     void saveNewLocation_returnNewLocation() {
         // when
-        Location response = locationService.addNewLocation("Torun", "22 45", "Kujawsko-pomorskie", "Polska");
+        Location response = locationService.addNewLocation("Torun", 1.0, 1.0, "Kujawsko-pomorskie", "Polska");
 
         // then
         assertNotNull(response);
@@ -23,18 +23,18 @@ class LocationServiceTest {
     @Test
     void saveNewLocation_whenCityValueIsEmpty_shouldThrowException() {
         // when
-        assertThrows(Exception.class, () -> locationService.addNewLocation("", "20 20", "region", "country"));
+        assertThrows(Exception.class, () -> locationService.addNewLocation("", 1.0,1.0, "region", "country"));
     }
 
     @Test
     void saveNewLocation_whenCountryValueIsEmpty_shouldThrowException() {
         // when
-        assertThrows(Exception.class, () -> locationService.addNewLocation("city", "20 20", "region", ""));
+        assertThrows(Exception.class, () -> locationService.addNewLocation("city", 1.0,1.0, "region", ""));
     }
 
     @Test
     void saveNewLocation_whenCoordinatesAreWrong_shouldThrowException() {
         // when
-        assertThrows(Exception.class, () -> locationService.addNewLocation("city", "200 -200", "region", ""));
+        assertThrows(Exception.class, () -> locationService.addNewLocation("city", 200.0, 200.0, "region", ""));
     }
 }
