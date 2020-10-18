@@ -31,6 +31,5 @@ public class LocationController {
     }
 
     public void findLocation(final String cityName) {
-//        locationService.findLocation(city);
     }
 }

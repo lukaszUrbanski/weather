@@ -47,4 +47,16 @@ public class LocationRepository {
 
         return locations;
     }
+
+    public boolean findLocation(final String cityName) {
+        Session session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+         session.createQuery("FROM Location AS l WHERE l.name = :name", Location.class)
+                .setParameter("name", cityName).
+                        getSingleResult();
+
+        transaction.commit();
+        session.close();
+        return true;
+    }
 }

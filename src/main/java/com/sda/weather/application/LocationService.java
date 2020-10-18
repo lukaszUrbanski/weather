@@ -35,4 +35,10 @@ public class LocationService {
     public List<Location> readAllLocations() {
         return locationRepository.readAllLocations();
     }
+
+    public void isLocationExist(final String cityName) {
+
+       boolean isExist = locationRepository.findLocation(cityName);
+
+    }
 }

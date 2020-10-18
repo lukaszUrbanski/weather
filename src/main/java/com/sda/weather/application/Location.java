@@ -3,6 +3,8 @@ package com.sda.weather.application;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @Entity
@@ -16,6 +18,8 @@ public class Location {
     private Double longitude;
     private String region;
     private String country;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "weather")
+    Set<Weather> weatherSet = new HashSet<>();
 
     public Location(){
 
@@ -27,5 +31,10 @@ public class Location {
         this.longitude = longitude;
         this.region = region;
         this.country = country;
+    }
+
+    public void saveWeather (final Weather weather){
+        this.weatherSet.add(weather);
+        weather.setLocation(this);
     }
 }

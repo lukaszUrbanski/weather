@@ -1,12 +1,14 @@
 package com.sda.weather.client;
 
 import com.sda.weather.application.LocationController;
+import com.sda.weather.application.WeatherController;
 
 import java.util.Scanner;
 
 public class Client {
 
     private final LocationController locationController = new LocationController();
+    private final WeatherController weatherController = new WeatherController();
 
     public void runClientInterface() {
         Scanner scanner = new Scanner(System.in);
@@ -37,6 +39,7 @@ public class Client {
     }
 
     private void showWeatherInformation() {
+        showLocation();
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter city to check weather ");
         String cityName = scanner.nextLine();
@@ -48,7 +51,7 @@ public class Client {
     private void findLocation(final String cityName) {
         // todo: create WeatherController.java
 
-        locationController.findLocation(cityName);
+        weatherController.findLocation(cityName);
     }
 
     private void showLocation() {
