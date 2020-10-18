@@ -7,9 +7,7 @@ public class WeatherRepository {
 
     private final SessionFactory sessionFactory = HibernateUtils.getSessionFactory();
 
-    public void checkLocationWeather(final String cityName) {
-
-
-        System.out.println("wether for: " + cityName + " is good :) ");
+    public Weather saveWeather(final Weather weather) {
+        return weather; // todo develop this part of code
     }
 }
