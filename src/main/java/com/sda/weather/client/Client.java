@@ -26,7 +26,7 @@ public class Client {
                     addNewLocation();
                     break;
                 case 2:
-                    showLocation();
+                    showAllLocations();
                     break;
                 case 3:
                     showWeatherInformation();
@@ -39,22 +39,15 @@ public class Client {
     }
 
     private void showWeatherInformation() {
-        showLocation();
+        showAllLocations();
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter city to check weather ");
         String cityName = scanner.nextLine();
 
-        findLocation(cityName);
-
+        weatherController.showWeatherInformation(cityName);
     }
 
-    private void findLocation(final String cityName) {
-        // todo: create WeatherController.java
-
-        weatherController.findLocation(cityName);
-    }
-
-    private void showLocation() {
+    private void showAllLocations() {
         String response = locationController.showAllLocations();
         System.out.println(response);
     }

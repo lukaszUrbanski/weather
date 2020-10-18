@@ -41,7 +41,7 @@ class LocationServiceTest {
     }
 
     @Test
-    void isLocationExist_whenLocationDoesntExist_shouldReturnFalse(){
+    void isLocationExist_whenLocationDoesNotExist_shouldReturnFalse(){
         // when
         boolean result = locationService.isLocationExist(UUID.randomUUID().toString());
 

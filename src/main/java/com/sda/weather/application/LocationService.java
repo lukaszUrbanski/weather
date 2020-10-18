@@ -37,6 +37,6 @@ public class LocationService {
     }
 
     public boolean isLocationExist(final String cityName) {
-       return locationRepository.findLocation(cityName);
+       return locationRepository.checkLocation(cityName);
     }
 }

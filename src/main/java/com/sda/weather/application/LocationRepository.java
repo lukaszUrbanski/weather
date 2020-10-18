@@ -11,17 +11,7 @@ import java.util.List;
 
 public class LocationRepository {
 
-    private final SessionFactory sessionFactory;
-
-    public LocationRepository() {
-        StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
-                .configure().build();
-
-        sessionFactory = new MetadataSources(registry)
-                .buildMetadata()
-                .buildSessionFactory();
-    }
-
+    private final SessionFactory sessionFactory = HibernateUtils.getSessionFactory();
 
     public Location saveNewLocation(final Location location) {
         Session session = sessionFactory.openSession();
@@ -48,12 +38,9 @@ public class LocationRepository {
         return locations;
     }
 
-    public boolean findLocation(final String cityName) {
+    public boolean checkLocation(final String cityName) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
-//        session.createQuery("FROM Location AS l WHERE l.name = :name", Location.class)
-//                .setParameter("name", cityName)
-//                .getSingleResult();
 
         boolean isExist = (Long) session.createQuery("SELECT count(*) FROM Location AS l WHERE l.city = :name")
                 .setParameter("name", cityName)

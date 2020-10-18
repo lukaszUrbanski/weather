@@ -16,20 +16,18 @@ public class LocationController {
         try {
             return objectMapper.writeValueAsString(location);
         } catch (JsonProcessingException e) {
-            throw new RuntimeException("...");  // todo: create your own exception -> InternalServerException -> 500
+            throw new InternalServerException("Data cant't be serialised.");  // todo: create your own exception -> InternalServerException -> 500
         }
     }
 
     public String showAllLocations() {
         List<Location> locations = locationService.readAllLocations();
 
-        try {
-            return objectMapper.writeValueAsString(locations);
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException("...");
-        }
-    }
-
-    public void findLocation(final String cityName) {
+        return locations.toString();
+//        try {
+//            return objectMapper.writeValueAsString(locations);
+//        } catch (JsonProcessingException e) {
+//            throw new InternalServerException("Data can not be serialised.");
+//        }
     }
 }
