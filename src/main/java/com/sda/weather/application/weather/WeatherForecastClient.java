@@ -27,18 +27,18 @@ public class WeatherForecastClient {
 
         HttpRequest httpRequest = HttpRequest.newBuilder()
                 .GET()
-                .uri(URI.create(String.format("http://api.weatherstack.com/current?access_key=%s&query=%s&forecast_day=1", ACCESS_KEY, cityName)))
+                //.uri(URI.create(String.format("http://api.weatherstack.com/current?access_key=%s&query=%s&forecast_day=1", ACCESS_KEY, cityName)))
+                .uri(URI.create("http://api.weatherstack.com/current?access_key=814e951ff41c347812903ae501d2e573&query=london"))
                 .build();
         try {
             HttpResponse<String> httpResponse = httpClient.send(httpRequest, HttpResponse.BodyHandlers.ofString());
             String responseBody = httpResponse.body();
-            System.out.println(responseBody);
+
             WeatherResponse weatherResponse = objectMapper.readValue(responseBody, WeatherResponse.class);
 
             return weatherResponse;
         } catch (Exception e) {
-            System.out.println("Nie udana próba pobrania pogody" + e.getStackTrace());
-            return new WeatherResponse();
+            throw new BadGatewayException("Nie udana próba pobrania pogody" + e.getStackTrace());
             // todo throw BadGatewayException -> 502
         }
     }
