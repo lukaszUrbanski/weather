@@ -16,8 +16,6 @@ public class Location {
     private String region;
     private String country;
 
-    public Location() {
-    }
 
     public Location(final String city, final String coordinate, final String region, final String country) {
         this.city = city;
