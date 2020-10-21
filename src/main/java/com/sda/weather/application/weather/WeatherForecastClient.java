@@ -26,7 +26,7 @@ public class WeatherForecastClient {
         HttpRequest httpRequest = HttpRequest.newBuilder()
                 .GET()
                 .version(HttpClient.Version.HTTP_1_1)
-                .uri(URI.create("http://api.weatherstack.com/current?access_key=814e951ff41c347812903ae501d2e573&query=london"))
+                .uri(URI.create(String.format("http://api.weatherstack.com/current?access_key=%s&query=%s",ACCESS_KEY, cityName)))
                 .build();
         try {
             HttpResponse<String> httpResponse = httpClient.send(httpRequest, HttpResponse.BodyHandlers.ofString());

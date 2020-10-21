@@ -1,9 +1,7 @@
 package com.sda.weather.application.weather;
 
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
+import com.fasterxml.jackson.annotation.JsonAlias;
 
 public class WeatherResponse {
 //
@@ -14,12 +12,11 @@ public class WeatherResponse {
 //    String lon;
 //    String localtime;
 //    String utc_offset;
-
-    int temperature;
-    int pressure;
-    int humidity;
-    String wind_dir;
-    int wind_speed;
+    private int temperature;
+    private int pressure;
+    private int humidity;
+    private String wind_dir;
+    private int wind_speed;
 
     public WeatherResponse() {
     }
