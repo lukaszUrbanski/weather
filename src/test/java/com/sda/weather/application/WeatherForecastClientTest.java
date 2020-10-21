@@ -12,7 +12,7 @@ public class WeatherForecastClientTest {
     @Test
     public void test(){
 
-        WeatherResponse response = weatherForecastClient.getWeather("London");
+       WeatherResponse response = weatherForecastClient.getWeather("London");
 
         System.out.println(response);
 

@@ -21,19 +21,17 @@ public class WeatherForecastClient {
 
     public WeatherResponse getWeather(String cityName) {
         // todo: http://api.weatherstack.com/current?access_key=814e951ff41c347812903ae501d2e573&query=london
-
-        //http://api.weatherstack.com/current?access_key=814e951ff41c347812903ae501d2e573&query=london&forecast_day=1
         // todo: create WeatherResponse class
 
         HttpRequest httpRequest = HttpRequest.newBuilder()
                 .GET()
-                //.uri(URI.create(String.format("http://api.weatherstack.com/current?access_key=%s&query=%s&forecast_day=1", ACCESS_KEY, cityName)))
+                .version(HttpClient.Version.HTTP_1_1)
                 .uri(URI.create("http://api.weatherstack.com/current?access_key=814e951ff41c347812903ae501d2e573&query=london"))
                 .build();
         try {
             HttpResponse<String> httpResponse = httpClient.send(httpRequest, HttpResponse.BodyHandlers.ofString());
             String responseBody = httpResponse.body();
-
+            System.out.println(responseBody);
             WeatherResponse weatherResponse = objectMapper.readValue(responseBody, WeatherResponse.class);
 
             return weatherResponse;
