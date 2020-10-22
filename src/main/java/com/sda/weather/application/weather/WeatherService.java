@@ -1,6 +1,8 @@
 package com.sda.weather.application.weather;
 
 import com.sda.weather.application.location.LocationService;
+import com.sda.weather.application.request_response.WeatherForecastClient;
+import com.sda.weather.application.request_response.WeatherResponse;
 
 public class WeatherService {
 
@@ -10,8 +12,9 @@ public class WeatherService {
 
     public Weather showWeatherInformation(final String cityName) {
         if (isLocationExist(cityName)) {
-           // WeatherResponse weather = weatherForecastClient.getWeather(cityName);
-            return weatherRepository.saveWeather(new Weather());
+          WeatherResponse weatherResponse = weatherForecastClient.getWeather(cityName);
+          Weather weather = weatherResponse.getWeather(cityName);
+            return weatherRepository.saveWeather(weather);
         } else {
             System.out.println("Location incorrect");
             throw new RuntimeException("...");              // todo

@@ -44,7 +44,7 @@ public class Client {
         System.out.println("Enter city to check weather ");
         String cityName = scanner.nextLine();
 
-        weatherController.showWeatherInformation(cityName);
+        System.out.println(weatherController.showWeatherInformation(cityName));
     }
 
     private void showAllLocations() {

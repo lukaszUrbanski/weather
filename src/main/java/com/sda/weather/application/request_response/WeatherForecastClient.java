@@ -1,7 +1,8 @@
-package com.sda.weather.application.weather;
+package com.sda.weather.application.request_response;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sda.weather.application.weather.BadGatewayException;
 
 import java.net.URI;
 import java.net.http.HttpClient;

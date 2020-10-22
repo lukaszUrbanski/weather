@@ -20,4 +20,24 @@ public class Weather {
     Double windSpeed;
     @ManyToOne
     Location location;
+
+    public Weather(final int temperature, final int pressure, final Double humidity, final String windDirectory, final Double windSpeed, final Location location) {
+        this.temperature = temperature;
+        this.pressure = pressure;
+        this.humidity = humidity;
+        this.windDirectory = windDirectory;
+        this.windSpeed = windSpeed;
+        this.location = location;
+    }
+
+    @Override
+    public String toString() {
+        return "Weather{" +
+                "temperature=" + temperature +
+                ", pressure=" + pressure +
+                ", humidity=" + humidity +
+                ", windDirectory='" + windDirectory + '\'' +
+                ", windSpeed=" + windSpeed +
+                '}';
+    }
 }

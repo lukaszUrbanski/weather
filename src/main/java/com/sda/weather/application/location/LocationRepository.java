@@ -49,4 +49,18 @@ public class LocationRepository {
 
         return isExist;
     }
+
+    public Location getLocation(String cityName){
+        Session session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+
+        Location location = session.createQuery("FROM Location AS l WHERE l.city = :name", Location.class)
+                .setParameter("name", cityName)
+                .getSingleResult();
+
+        transaction.commit();
+        session.close();
+
+        return location;
+    }
 }

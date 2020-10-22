@@ -5,7 +5,8 @@ public class WeatherController {
     private final WeatherService weatherService = new WeatherService();
 
     // todo: return something
-    public void showWeatherInformation(final String cityName) {
+    public String showWeatherInformation(final String cityName) {
         Weather weather = weatherService.showWeatherInformation(cityName);
+        return weather.toString();
     }
 }
