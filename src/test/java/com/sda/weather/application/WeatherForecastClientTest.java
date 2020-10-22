@@ -1,7 +1,7 @@
 package com.sda.weather.application;
 
-import com.sda.weather.application.request_response.WeatherForecastClient;
-import com.sda.weather.application.request_response.WeatherResponse;
+import com.sda.weather.application.weather.client.WeatherForecastClient;
+import com.sda.weather.application.weather.client.WeatherResponse;
 import org.junit.jupiter.api.Test;
 
 public class WeatherForecastClientTest {

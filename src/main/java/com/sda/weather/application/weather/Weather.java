@@ -21,13 +21,12 @@ public class Weather {
     @ManyToOne
     Location location;
 
-    public Weather(final int temperature, final int pressure, final Double humidity, final String windDirectory, final Double windSpeed, final Location location) {
+    public Weather(int temperature, int pressure, Double humidity, String windDirectory, Double windSpeed) {
         this.temperature = temperature;
         this.pressure = pressure;
         this.humidity = humidity;
         this.windDirectory = windDirectory;
         this.windSpeed = windSpeed;
-        this.location = location;
     }
 
     @Override
