@@ -3,7 +3,7 @@ package com.sda.weather.application.weather;
 import lombok.Data;
 
 @Data
-public class WeatherResponse {
+public class WeatherResponse {  // w resources/example_response.json wkleiłem strukturę otrzymanego JSON'a - są tam zagnieżdżone obiekty
 
 //    String name;
 //    String country;
@@ -16,7 +16,7 @@ public class WeatherResponse {
     private Current current;
 
     @Data
-    public static class Current {
+    public static class Current {   // ta klasa może być zdefiniowana w sobnym pliku np. Current.java
         private int temperature;
         private int pressure;
         private int humidity;
