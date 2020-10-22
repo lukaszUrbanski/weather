@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 @Data
+
 public class Current {   // ta klasa może być zdefiniowana w sobnym pliku np. Current.java
     private int temperature;
     private int pressure;

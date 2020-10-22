@@ -24,6 +24,7 @@ public class WeatherService {
             return weatherRepository.saveWeather(weather);
         } else {
             System.out.println("Location incorrect");
+            //todo add "would you like save location? "
             throw new RuntimeException("...");              // todo
         }
     }
