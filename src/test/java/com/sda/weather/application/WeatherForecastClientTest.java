@@ -2,6 +2,7 @@ package com.sda.weather.application;
 
 import com.sda.weather.application.weather.client.WeatherForecastClient;
 import com.sda.weather.application.weather.client.WeatherResponse;
+import com.sda.weather.application.weather.client.WeatherResponseByCoordinates;
 import org.junit.jupiter.api.Test;
 
 public class WeatherForecastClientTest {
@@ -10,7 +11,7 @@ public class WeatherForecastClientTest {
 
     @Test
     public void test() {    // todo: name me
-        WeatherResponse response = weatherForecastClient.getWeather("London");
+        WeatherResponseByCoordinates response = weatherForecastClient.getWeather(52.0, 12.0);
         System.out.println(response);
     }
 }

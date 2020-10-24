@@ -6,7 +6,12 @@ public class WeatherController {
 
     // todo: return something
     public String showWeatherInformation(final String cityName) {
-        Weather weather = weatherService.showWeatherInformation(cityName);
+        Weather weather = weatherService.showWeatherInformationByLocation(cityName);
+        return weather.toString();
+    }
+
+    public String showWeatherInformation(final double latitude, final double longitude) {
+        Weather weather = weatherService.showWeatherInformationByCoordinates(latitude, longitude);
         return weather.toString();
     }
 }

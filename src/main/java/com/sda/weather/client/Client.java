@@ -17,7 +17,8 @@ public class Client {
 
             System.out.println("1. Add location.");
             System.out.println("2. Show available locations");
-            System.out.println("3. Show weather information");
+            System.out.println("3. Show weather information by city name");
+            System.out.println("4. Show weather information by coordinate");
             System.out.println("0. Close application.");
             int response = scanner.nextInt();
 
@@ -31,11 +32,27 @@ public class Client {
                 case 3:
                     showWeatherInformation();
                     break;
+                case 4:
+                    showWeatherInformationByCoordinates();
+                    break;
                 case 0:
                     return;
             }
             
         }
+    }
+
+    private void showWeatherInformationByCoordinates() {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Enter location latitude: ");
+        double latitude = scanner.nextDouble();
+
+        System.out.print("Enter location longitude: ");
+        double longitude = scanner.nextDouble();
+
+        System.out.println(weatherController.showWeatherInformation(latitude, longitude));
+
     }
 
     private void showWeatherInformation() {
