@@ -5,8 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 @Data
-public class WeatherResponseByCoordinates {
+public class WeatherCoordinatesResponse {
 
     private List<ForecastWeather> daily = new LinkedList<>();
-
 }

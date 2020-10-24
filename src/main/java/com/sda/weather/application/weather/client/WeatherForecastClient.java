@@ -22,12 +22,8 @@ public class WeatherForecastClient {
     }
 
     public WeatherResponse getWeather(String cityName) {
-        // todo: http://api.weatherstack.com/current?access_key=814e951ff41c347812903ae501d2e573&query=london
-        // todo: create WeatherResponse class
-
         HttpRequest httpRequest = HttpRequest.newBuilder()
                 .GET()
-                .version(HttpClient.Version.HTTP_1_1)
                 .uri(URI.create(String.format("http://api.weatherstack.com/current?access_key=%s&query=%s",WEATHERSTACK_ACCESS_KEY, cityName)))
                 .build();
 
@@ -40,24 +36,20 @@ public class WeatherForecastClient {
             return weatherResponse;
         } catch (Exception e) {
             throw new BadGatewayException("Nie udana próba pobrania pogody" + e.getStackTrace());
-            // todo throw BadGatewayException -> 502
         }
     }
-    public WeatherResponseByCoordinates getWeather(Double lat, Double lon) {
-
-
+    public WeatherCoordinatesResponse getWeather(Double lat, Double lon) {
         HttpRequest httpRequest = HttpRequest.newBuilder()
                 .GET()
-                .version(HttpClient.Version.HTTP_1_1)
                 .uri(URI.create(String.format("https://api.openweathermap.org/data/2.5/onecall?lat=%f&lon=%f&units=metric&time=1603627200&appid=%s",lat, lon, OPEN_WEATHER_ACCESS_KEY)))
                 .build();
         try {
             HttpResponse<String> httpResponse = httpClient.send(httpRequest, HttpResponse.BodyHandlers.ofString());
             String responseBody = httpResponse.body();
             System.out.println(responseBody);
-            WeatherResponseByCoordinates weatherResponseByCoordinates = objectMapper.readValue(responseBody, WeatherResponseByCoordinates.class);
+            WeatherCoordinatesResponse weatherCoordinatesResponse = objectMapper.readValue(responseBody, WeatherCoordinatesResponse.class);
 
-            return weatherResponseByCoordinates;
+            return weatherCoordinatesResponse;
         } catch (Exception e) {
             throw new BadGatewayException("Nie udana próba pobrania pogody" + e.getStackTrace());
             // todo throw BadGatewayException -> 502

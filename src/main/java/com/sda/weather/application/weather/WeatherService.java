@@ -7,16 +7,16 @@ import com.sda.weather.application.location.LocationService;
 import com.sda.weather.application.weather.client.WeatherForecastClient;
 import com.sda.weather.application.weather.client.WeatherMapper;
 import com.sda.weather.application.weather.client.WeatherResponse;
-import com.sda.weather.application.weather.client.WeatherResponseByCoordinates;
+import com.sda.weather.application.weather.client.WeatherCoordinatesResponse;
 
-public class WeatherService {
+class WeatherService {
 
     private final WeatherRepository weatherRepository = new WeatherRepository();
     private final LocationService locationService = new LocationService();
     private final WeatherForecastClient weatherForecastClient = new WeatherForecastClient();
     private final LocationRepository locationRepository = new LocationRepository();
 
-    public Weather showWeatherInformationByLocation(final String cityName) {
+    Weather showWeatherInformationByLocation(final String cityName) {
         if (isLocationExist(cityName)) {
             WeatherResponse weatherResponse = weatherForecastClient.getWeather(cityName);
             Weather weather = WeatherMapper.mapToWeather(weatherResponse);
@@ -31,10 +31,12 @@ public class WeatherService {
         }
     }
 
-    public Weather showWeatherInformationByCoordinates(final Double latitude, Double longitude) {
+    Weather showWeatherInformationByCoordinates(final Double latitude, Double longitude) {
         if (isCoordinatesCorrect(latitude, longitude)) {
-            WeatherResponseByCoordinates weatherResponseByCoordinates = weatherForecastClient.getWeather(latitude, longitude);
-           Weather weather = WeatherMapper.mapToWeather(weatherResponseByCoordinates);
+            WeatherCoordinatesResponse weatherCoordinatesResponse = weatherForecastClient.getWeather(latitude, longitude);
+            Weather weather = WeatherMapper.mapToWeather(weatherCoordinatesResponse);
+
+            // todo valid a localization and fill in to the weather
 
             return weatherRepository.saveWeather(weather);
         } else {
@@ -58,5 +60,4 @@ public class WeatherService {
     public boolean isLocationExist(final String cityName) {
         return locationService.isLocationExist(cityName);
     }
-
 }

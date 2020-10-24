@@ -5,7 +5,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
-public class WeatherRepository {
+class WeatherRepository {
 
     private final SessionFactory sessionFactory = HibernateUtils.getSessionFactory();
 
@@ -20,6 +20,4 @@ public class WeatherRepository {
 
         return weather;
     }
-
-
 }

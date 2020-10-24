@@ -2,7 +2,10 @@ package com.sda.weather.application.weather.client;
 
 import com.sda.weather.application.weather.Weather;
 
+import java.time.Instant;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.TimeZone;
 
 public class WeatherMapper {
 
@@ -17,15 +20,16 @@ public class WeatherMapper {
         );
     }
 
-    public static  Weather mapToWeather(WeatherResponseByCoordinates weatherResponseByCoordinates){
-        ForecastWeather forecastWeather = weatherResponseByCoordinates.getDaily().get(1);
+    public static Weather mapToWeather(WeatherCoordinatesResponse weatherCoordinatesResponse) {
+        ForecastWeather forecastWeather = weatherCoordinatesResponse.getDaily().get(1);
+        Long timestamp = Long.valueOf(forecastWeather.getDate());
         return new Weather(
                 forecastWeather.getTemperature().getDay(),
                 forecastWeather.getPressure(),
                 forecastWeather.getHumidity(),
                 forecastWeather.getWindDirectory(),
                 forecastWeather.getWindSpeed(),
-                LocalDate.parse(forecastWeather.getDate())
+                LocalDate.ofInstant(Instant.ofEpochSecond(timestamp), TimeZone.getDefault().toZoneId())
         );
     }
 }

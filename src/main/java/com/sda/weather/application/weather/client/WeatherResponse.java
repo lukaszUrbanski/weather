@@ -9,5 +9,4 @@ public class WeatherResponse {
     private Current current;
     @JsonProperty("location")
     private ResponseLocation responseLocation;
-
 }
