@@ -14,18 +14,18 @@ public class LocationController {
     public String addLocation(final String cityName, final Double latitude, final Double longitude, final String region, final String country) {
         Location location = locationService.addNewLocation(cityName, latitude, longitude, region, country);
 
-        try {
-            return objectMapper.writeValueAsString(location);
-        } catch (JsonProcessingException e) {
-            throw new InternalServerException("Data cant't be serialised.");  // todo: create your own exception -> InternalServerException -> 500
-        }
+        return getString(location);
     }
 
     public String showAllLocations() {
         List<Location> locations = locationService.readAllLocations();
 
+        return getString(locations);
+    }
+
+    public <T> String getString(T object){
         try {
-            return objectMapper.writeValueAsString(locations);
+            return objectMapper.writeValueAsString(object);
         } catch (JsonProcessingException e) {
             throw new InternalServerException("Data can not be serialised.");
         }

@@ -63,4 +63,22 @@ public class LocationRepository {
 
         return location;
     }
+
+    public Double[] getCoordinates(final String cityName) {
+        Session session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+        Double[] coordinates = new Double[2];
+         coordinates[0]  = Double.valueOf(session.createQuery("SELECT max(latitude) FROM Location AS l WHERE l.city = :name")
+                .setParameter("name", cityName)
+                .getFirstResult());
+        coordinates[1]  = Double.valueOf(session.createQuery("SELECT max(longitude) FROM Location AS l WHERE l.city = :name")
+                .setParameter("name", cityName)
+                .getFirstResult());
+
+        transaction.commit();
+        session.close();
+
+        return coordinates;
+
+    }
 }

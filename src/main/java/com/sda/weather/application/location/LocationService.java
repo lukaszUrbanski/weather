@@ -10,11 +10,7 @@ public class LocationService {
 
     public Location addNewLocation(final String cityName, final Double latitude, final Double longitude, final String region, final String country) {
         if (cityName == null || cityName.isEmpty()) {
-            throw new RuntimeException("City name can't bo empty."); // todo: BadRequestException -> 400
-        }
-
-        if (region == null || region.isEmpty()) {
-            throw new WrongDataException("Region can't bo empty.");
+            throw new WrongDataException("City name can't bo empty.");
         }
 
         if (country == null || country.isEmpty()) {
@@ -39,6 +35,6 @@ public class LocationService {
     }
 
     public boolean isLocationExist(final String cityName) {
-       return locationRepository.checkLocation(cityName);
+        return locationRepository.checkLocation(cityName);
     }
 }

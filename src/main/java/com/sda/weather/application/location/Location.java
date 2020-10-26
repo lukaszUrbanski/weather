@@ -34,9 +34,4 @@ public class Location {
         this.region = region;
         this.country = country;
     }
-
-    public void saveWeather(final Weather weather) {
-        this.weatherSet.add(weather);
-        weather.setLocation(this);
-    }
 }

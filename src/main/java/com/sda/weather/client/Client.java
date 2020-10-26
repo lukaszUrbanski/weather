@@ -51,8 +51,10 @@ public class Client {
         System.out.print("Enter location longitude: ");
         double longitude = scanner.nextDouble();
 
-        System.out.println(weatherController.showWeatherInformation(latitude, longitude));
+        System.out.print("Enter date: ");
+        String date = scanner.nextLine();
 
+        System.out.println(weatherController.showWeatherInformation(latitude, longitude, date));
     }
 
     private void showWeatherInformation() {
@@ -61,7 +63,10 @@ public class Client {
         System.out.println("Enter city to check weather ");
         String cityName = scanner.nextLine();
 
-        System.out.println(weatherController.showWeatherInformation(cityName));
+        System.out.print("Enter date of weather(yyyy-mm-dd)");
+        String date = scanner.nextLine();
+
+        System.out.println(weatherController.showWeatherInformation(cityName, date));
     }
 
     private void showAllLocations() {

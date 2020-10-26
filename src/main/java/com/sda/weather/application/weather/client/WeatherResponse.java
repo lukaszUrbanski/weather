@@ -1,12 +1,11 @@
 package com.sda.weather.application.weather.client;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
+import java.util.LinkedList;
+import java.util.List;
 
 @Data
 public class WeatherResponse {
 
-    private Current current;
-    @JsonProperty("location")
-    private ResponseLocation responseLocation;
+    private List<ForecastWeather> daily = new LinkedList<>();
 }
