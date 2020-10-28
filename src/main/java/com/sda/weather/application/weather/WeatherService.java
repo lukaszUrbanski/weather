@@ -21,17 +21,16 @@ class WeatherService {
     private final LocationService locationService = new LocationService();
     private final WeatherForecastClient weatherForecastClient = new WeatherForecastClient();
     private final LocationRepository locationRepository = new LocationRepository();
+    private final String datePattern = "yyyy-MM-dd";
 
-    Weather showWeatherInformation(final String cityName, final String date)  {
+    Weather showWeatherInformation(final String cityName, final String date) {
+
         if (isLocationExist(cityName)) {
             Location location = locationRepository.getLocation(cityName);
             Double latitude = location.getLatitude();
             Double longitude = location.getLongitude();
-            LocalDate weatherDate = LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-            if (weatherDate.getDayOfYear() - LocalDate.now().getDayOfYear() <= 0 &&weatherDate.getDayOfYear() - LocalDate.now().getDayOfYear() >= 7 ){
-                System.out.println("Wrong data. The weather will be shown for tomorrow.");
-                weatherDate = LocalDate.now();
-            }
+            LocalDate weatherDate = LocalDate.parse(date, DateTimeFormatter.ofPattern(datePattern));
+            weatherDate = checkDate(weatherDate);
 
             WeatherResponse weatherResponse = weatherForecastClient.getWeather(latitude, longitude);
 
@@ -64,6 +63,14 @@ class WeatherService {
         }
     }
 
+    private LocalDate checkDate(LocalDate weatherDate) {
+        if (weatherDate.getDayOfYear() - LocalDate.now().getDayOfYear() <= 0 && weatherDate.getDayOfYear() - LocalDate.now().getDayOfYear() >= 7) {
+            System.out.println("Wrong data. The weather will be shown for tomorrow.");
+            weatherDate = LocalDate.now();
+        }
+        return weatherDate;
+    }
+
 
     Weather showWeatherInformation(final Double latitude, Double longitude, final String date) {
         LocalDate weatherDate = LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
@@ -76,7 +83,7 @@ class WeatherService {
 
             return weatherRepository.saveWeather(weather);
         } else {
-            System.out.println("Location incorrect");
+            System.out.println("Incorrect location");
             //todo add "would you like save location? "
             throw new RuntimeException("...");              // todo
         }
