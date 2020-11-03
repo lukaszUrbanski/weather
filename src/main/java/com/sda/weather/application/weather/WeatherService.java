@@ -4,16 +4,15 @@ import com.sda.weather.application.WrongDataException;
 import com.sda.weather.application.location.Location;
 import com.sda.weather.application.location.LocationRepository;
 import com.sda.weather.application.location.LocationService;
-import com.sda.weather.application.location.client.NewLocation;
 import com.sda.weather.application.location.client.LocationClient;
 import com.sda.weather.application.location.client.LocationMapper;
+import com.sda.weather.application.location.client.NewLocation;
 import com.sda.weather.application.weather.client.WeatherForecastClient;
 import com.sda.weather.application.weather.client.WeatherMapper;
 import com.sda.weather.application.weather.client.WeatherResponse;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Scanner;
 
 class WeatherService {
 
@@ -24,7 +23,6 @@ class WeatherService {
     private final String datePattern = "yyyy-MM-dd";
 
     Weather showWeatherInformation(final String cityName, final String date) {
-
         if (isLocationExist(cityName)) {
             Location location = locationRepository.getLocation(cityName);
             Double latitude = location.getLatitude();
@@ -40,33 +38,23 @@ class WeatherService {
             return weatherRepository.saveWeather(weather);
 
         } else {
-            Scanner scanner = new Scanner(System.in);
-            System.out.println("Location incorrect");
+            LocationClient locationClient = new LocationClient();
+            LocationMapper locationMapper = new LocationMapper();
 
-            System.out.println("Would you like add this location? Y/N ");
-            String response = scanner.nextLine();
+            NewLocation newLocation = locationClient.getLocation(cityName);
+            Location location = locationMapper.mapToLocation(newLocation);
 
-            if (response.equalsIgnoreCase("Y")) {
-                LocationClient locationClient = new LocationClient();
-                LocationMapper locationMapper = new LocationMapper();
-
-                NewLocation newLocation = locationClient.getLocation(cityName);
-                Location location = locationMapper.mapToLocation(newLocation);
-
-                locationRepository.saveNewLocation(location);
-                return showWeatherInformation(cityName, date);
-            } else {
-                System.out.println("Enter new location or close application");
-                String newLocation = scanner.nextLine();
-                return showWeatherInformation(newLocation, date);
-            }
+            locationRepository.saveNewLocation(location);
+            return showWeatherInformation(cityName, date);
         }
     }
 
     private LocalDate checkDate(LocalDate weatherDate) {
+        // todo weatherDate.getDayOfYear() for 2021.01.02
+        // todo LocalDate.now().getDayOfYear() for 2020.12.31
+        // todo use LocalDate API
         if (weatherDate.getDayOfYear() - LocalDate.now().getDayOfYear() <= 0 && weatherDate.getDayOfYear() - LocalDate.now().getDayOfYear() >= 7) {
-            System.out.println("Wrong data. The weather will be shown for tomorrow.");
-            weatherDate = LocalDate.now();
+            weatherDate = LocalDate.now(); // todo tomorrow?
         }
         return weatherDate;
     }
@@ -83,14 +71,13 @@ class WeatherService {
 
             return weatherRepository.saveWeather(weather);
         } else {
-            System.out.println("Incorrect location");
             //todo add "would you like save location? "
             throw new RuntimeException("...");              // todo
         }
     }
 
     private boolean isCoordinatesCorrect(final Double latitude, final Double longitude) {
-        if (latitude < -90 || latitude > 90) {
+        if (latitude < -90 || latitude > 90) {                      // todo duplicate with the code from LocationService -> move these code to separate service (eg. CoordinatesValidator.java)
             throw new WrongDataException("Latitude is wrong.");
         }
 

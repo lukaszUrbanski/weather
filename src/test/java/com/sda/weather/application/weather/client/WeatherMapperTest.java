@@ -1,12 +1,7 @@
-package com.sda.weather.application;
+package com.sda.weather.application.weather.client;
 
 import com.sda.weather.application.weather.Weather;
-import com.sda.weather.application.weather.client.ForecastWeather;
-import com.sda.weather.application.weather.client.Temperature;
-import com.sda.weather.application.weather.client.WeatherResponse;
-import com.sda.weather.application.weather.client.WeatherMapper;
 import org.junit.jupiter.api.Test;
-
 
 import java.time.LocalDate;
 import java.util.List;
@@ -15,6 +10,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class WeatherMapperTest {
+
+    // https://mkyong.com/junit5/junit-5-parameterized-tests/
+    // https://nipafx.dev/junit-5-parameterized-tests
 
     @Test
     void mapToWeather() {
@@ -40,7 +38,5 @@ class WeatherMapperTest {
         assertEquals(result.getDate(), LocalDate.of(2020, 10, 29));
         assertEquals(result.getTemperature(),33.0);
         assertEquals(result.getWindDirectory(), "NE(56°)");
-
-
     }
 }

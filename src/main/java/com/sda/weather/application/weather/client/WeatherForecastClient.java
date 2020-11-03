@@ -28,7 +28,6 @@ public class WeatherForecastClient {
         try {
             HttpResponse<String> httpResponse = httpClient.send(httpRequest, HttpResponse.BodyHandlers.ofString());
             String responseBody = httpResponse.body();
-            System.out.println(responseBody);
             WeatherResponse weatherResponse = objectMapper.readValue(responseBody, WeatherResponse.class);
 
             return weatherResponse;

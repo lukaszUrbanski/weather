@@ -29,7 +29,6 @@ public class LocationClient {
         try {
             HttpResponse<String> httpResponse = httpClient.send(httpRequest, HttpResponse.BodyHandlers.ofString());
             String responseBody = httpResponse.body();
-            System.out.println(responseBody);
             NewLocation newLocation = objectMapper.readValue(responseBody, NewLocation.class);
 
             return newLocation;
