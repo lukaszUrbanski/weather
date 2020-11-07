@@ -5,7 +5,8 @@ import com.sda.weather.application.weather.WeatherController;
 
 import java.util.Scanner;
 
-public class Client {
+public class
+Client {
 
     private final LocationController locationController = new LocationController();
     private final WeatherController weatherController = new WeatherController();

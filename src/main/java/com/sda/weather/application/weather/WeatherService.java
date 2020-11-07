@@ -1,5 +1,6 @@
 package com.sda.weather.application.weather;
 
+import com.sda.weather.application.CoordinatesValidator;
 import com.sda.weather.application.WrongDataException;
 import com.sda.weather.application.location.Location;
 import com.sda.weather.application.location.LocationRepository;
@@ -10,10 +11,15 @@ import com.sda.weather.application.location.client.NewLocation;
 import com.sda.weather.application.weather.client.WeatherForecastClient;
 import com.sda.weather.application.weather.client.WeatherMapper;
 import com.sda.weather.application.weather.client.WeatherResponse;
+import lombok.Data;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
+@Data
 class WeatherService {
 
     private final WeatherRepository weatherRepository = new WeatherRepository();
@@ -21,13 +27,20 @@ class WeatherService {
     private final WeatherForecastClient weatherForecastClient = new WeatherForecastClient();
     private final LocationRepository locationRepository = new LocationRepository();
     private final String datePattern = "yyyy-MM-dd";
+    private LocalDate today = LocalDate.now();
 
     Weather showWeatherInformation(final String cityName, final String date) {
         if (isLocationExist(cityName)) {
             Location location = locationRepository.getLocation(cityName);
             Double latitude = location.getLatitude();
             Double longitude = location.getLongitude();
-            LocalDate weatherDate = LocalDate.parse(date, DateTimeFormatter.ofPattern(datePattern));
+            LocalDate weatherDate;
+            try {
+                weatherDate = LocalDate.parse(date, DateTimeFormatter.ofPattern(datePattern));
+            } catch (Exception e) {
+                weatherDate = LocalDate.now().plusDays(1);
+                // throw new WrongDataException("Wrong date " + e.getStackTrace().toString()); // todo log exception
+            }
             weatherDate = checkDate(weatherDate);
 
             WeatherResponse weatherResponse = weatherForecastClient.getWeather(latitude, longitude);
@@ -49,12 +62,11 @@ class WeatherService {
         }
     }
 
-    private LocalDate checkDate(LocalDate weatherDate) {
-        // todo weatherDate.getDayOfYear() for 2021.01.02
-        // todo LocalDate.now().getDayOfYear() for 2020.12.31
-        // todo use LocalDate API
-        if (weatherDate.getDayOfYear() - LocalDate.now().getDayOfYear() <= 0 && weatherDate.getDayOfYear() - LocalDate.now().getDayOfYear() >= 7) {
-            weatherDate = LocalDate.now(); // todo tomorrow?
+
+    public LocalDate checkDate(LocalDate weatherDate) {
+
+        if (weatherDate.toEpochDay() - today.toEpochDay() <= 0 || weatherDate.toEpochDay() - today.toEpochDay() >= 7) {
+            weatherDate = today.plusDays(1);
         }
         return weatherDate;
     }
@@ -63,29 +75,25 @@ class WeatherService {
     Weather showWeatherInformation(final Double latitude, Double longitude, final String date) {
         LocalDate weatherDate = LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 
-        if (isCoordinatesCorrect(latitude, longitude)) {
+        if (CoordinatesValidator.isCoordinatesCorrect(latitude, longitude)) {
             WeatherResponse weatherResponse = weatherForecastClient.getWeather(latitude, longitude);
             Weather weather = WeatherMapper.mapToWeather(weatherResponse, weatherDate);
 
-            // todo valid a localization and fill in to the weather
-
-            return weatherRepository.saveWeather(weather);
+            if (isWeatherCorrect(weather)) {
+                return weatherRepository.saveWeather(weather);
+            } else
+                throw new RuntimeException("...");
         } else {
             //todo add "would you like save location? "
             throw new RuntimeException("...");              // todo
         }
     }
 
-    private boolean isCoordinatesCorrect(final Double latitude, final Double longitude) {
-        if (latitude < -90 || latitude > 90) {                      // todo duplicate with the code from LocationService -> move these code to separate service (eg. CoordinatesValidator.java)
-            throw new WrongDataException("Latitude is wrong.");
-        }
-
-        if (longitude < -180 || longitude > 180) {
-            throw new WrongDataException("Longitude is wrong.");
-        }
+    private boolean isWeatherCorrect(final Weather weather) {
+        // todo develop method
         return true;
     }
+
 
     public boolean isLocationExist(final String cityName) {
         return locationService.isLocationExist(cityName);
