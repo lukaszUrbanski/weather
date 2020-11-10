@@ -10,7 +10,7 @@ public class WeatherForecastClientTest {
 
     @Test
     public void test2() {    // todo: name me, develop me
-        WeatherResponse response = weatherForecastClient.getWeather(52.0, 12.0);
+        WeatherResponse response = weatherForecastClient.getWeather(52.0, 12.0 );
         System.out.println(WeatherMapper.mapToWeather(response, LocalDate.now()));
     }
 }

@@ -31,39 +31,61 @@ class WeatherService {
 
     Weather showWeatherInformation(final String cityName, final String date) {
         if (isLocationExist(cityName)) {
+
             Location location = locationRepository.getLocation(cityName);
             Double latitude = location.getLatitude();
             Double longitude = location.getLongitude();
-            LocalDate weatherDate;
-            try {
-                weatherDate = LocalDate.parse(date, DateTimeFormatter.ofPattern(datePattern));
-            } catch (Exception e) {
-                weatherDate = LocalDate.now().plusDays(1);
-                // throw new WrongDataException("Wrong date " + e.getStackTrace().toString()); // todo log exception
-            }
-            weatherDate = checkDate(weatherDate);
 
-            WeatherResponse weatherResponse = weatherForecastClient.getWeather(latitude, longitude);
+            LocalDate weatherDate = checkDate(date);
 
-            Weather weather = WeatherMapper.mapToWeather(weatherResponse, weatherDate);
+            Weather weather = getWeather(latitude, longitude, weatherDate);
+
             weather.setLocation(location);
 
-            return weatherRepository.saveWeather(weather);
-
+            return saveWeather(weather);
         } else {
             LocationClient locationClient = new LocationClient();
-            LocationMapper locationMapper = new LocationMapper();
 
             NewLocation newLocation = locationClient.getLocation(cityName);
-            Location location = locationMapper.mapToLocation(newLocation);
+            Location location = LocationMapper.mapToLocation(newLocation);
 
             locationRepository.saveNewLocation(location);
             return showWeatherInformation(cityName, date);
         }
     }
 
+    Weather showWeatherInformation(final Double latitude, Double longitude, final String date) {
+        LocalDate weatherDate = checkDate(date);
 
-    public LocalDate checkDate(LocalDate weatherDate) {
+        if (CoordinatesValidator.isCoordinatesCorrect(latitude, longitude)) {
+            Weather weather = getWeather(latitude, longitude, weatherDate);
+
+            return saveWeather(weather);
+        } else {
+            throw new WrongDataException("Wrong coordinates");
+        }
+    }
+
+    private Weather getWeather(final Double latitude, final Double longitude, final LocalDate weatherDate) {
+        WeatherResponse weatherResponse = weatherForecastClient.getWeather(latitude, longitude);
+        return WeatherMapper.mapToWeather(weatherResponse, weatherDate);
+    }
+
+    private Weather saveWeather(final Weather weather) {
+        if (isWeatherCorrect(weather)) {
+            return weatherRepository.saveWeather(weather);
+        } else
+            throw new WrongDataException("Weather is incorrect.");
+    }
+
+    private LocalDate checkDate(String date) {
+        LocalDate weatherDate;
+        try {
+            weatherDate = LocalDate.parse(date, DateTimeFormatter.ofPattern(datePattern));
+        } catch (Exception e) {
+            return LocalDate.now().plusDays(1);
+            // throw new WrongDataException("Wrong date " + e.getStackTrace().toString()); // todo log exception
+        }
 
         if (weatherDate.toEpochDay() - today.toEpochDay() <= 0 || weatherDate.toEpochDay() - today.toEpochDay() >= 7) {
             weatherDate = today.plusDays(1);
@@ -71,31 +93,33 @@ class WeatherService {
         return weatherDate;
     }
 
-
-    Weather showWeatherInformation(final Double latitude, Double longitude, final String date) {
-        LocalDate weatherDate = LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-
-        if (CoordinatesValidator.isCoordinatesCorrect(latitude, longitude)) {
-            WeatherResponse weatherResponse = weatherForecastClient.getWeather(latitude, longitude);
-            Weather weather = WeatherMapper.mapToWeather(weatherResponse, weatherDate);
-
-            if (isWeatherCorrect(weather)) {
-                return weatherRepository.saveWeather(weather);
-            } else
-                throw new RuntimeException("...");
-        } else {
-            //todo add "would you like save location? "
-            throw new RuntimeException("...");              // todo
-        }
-    }
-
     private boolean isWeatherCorrect(final Weather weather) {
-        // todo develop method
-        return true;
+        boolean isCorrect = true;
+        if (weather.humidity < 0 || weather.humidity > 100) {
+            isCorrect = false;
+        }
+
+        if (weather.pressure < 800 || weather.pressure > 1100) {
+            isCorrect = false;
+        }
+
+        if (weather.temperature < -100 || weather.temperature > 65) {
+            isCorrect = false;
+        }
+
+        if ( Integer.parseInt(weather.windDirectory) < 0 || Integer.parseInt(weather.windDirectory) > 360){
+            isCorrect = false;
+        }
+
+        if (weather.windSpeed < 0 || weather.windSpeed > 500){
+            isCorrect = false;
+        }
+
+        return isCorrect;
     }
 
 
-    public boolean isLocationExist(final String cityName) {
+    private boolean isLocationExist(final String cityName) {
         return locationService.isLocationExist(cityName);
     }
 }
