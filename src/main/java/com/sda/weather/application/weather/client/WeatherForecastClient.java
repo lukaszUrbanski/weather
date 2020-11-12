@@ -8,6 +8,7 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.Arrays;
 
 public class WeatherForecastClient {
 
@@ -28,11 +29,12 @@ public class WeatherForecastClient {
         try {
             HttpResponse<String> httpResponse = httpClient.send(httpRequest, HttpResponse.BodyHandlers.ofString());
             String responseBody = httpResponse.body();
-            WeatherResponse weatherResponse = objectMapper.readValue(responseBody, WeatherResponse.class);
+            WeatherResponse weatherResponse;
+            weatherResponse = objectMapper.readValue(responseBody, WeatherResponse.class);
 
             return weatherResponse;
         } catch (Exception e) {
-            throw new BadGatewayException("Nie udana próba pobrania pogody" + e.getStackTrace());
+            throw new BadGatewayException("Failed to download weather" + Arrays.toString(e.getStackTrace()));
         }
     }
 

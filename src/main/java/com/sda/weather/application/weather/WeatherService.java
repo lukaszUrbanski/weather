@@ -78,7 +78,7 @@ class WeatherService {
             throw new WrongDataException("Weather is incorrect.");
     }
 
-    private LocalDate checkDate(String date) {
+    LocalDate checkDate(String date) {
         LocalDate weatherDate;
         try {
             weatherDate = LocalDate.parse(date, DateTimeFormatter.ofPattern(datePattern));
